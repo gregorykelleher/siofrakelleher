@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="well well-sm">
+                <form class="form-horizontal" action="{{ page.slug }}" method="post" id="simple_contact">
+                    <fieldset>
+                        <legend class="text-center">{{ page.title }}</legend>
+
+                        {# @todo: you can use to integrate with ajax response #}
+                        <div id="simple_contact-messages"></div>
+
+                        <!-- Name input-->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="name">{{ simple_contact.fields.name.label }}</label>
+                            <div class="col-md-9">
+                                <input id="name" name="name" type="text" placeholder="{{ simple_contact.fields.name.placeholder }}" class="form-control" />
+                            </div>
+                        </div>
+
+                        <!-- Email input-->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="email">{{ simple_contact.fields.email.label }}</label>
+                            <div class="col-md-9">
+                                <input id="email" name="email" type="text" placeholder="{{ simple_contact.fields.email.placeholder }}" class="form-control" />
+                            </div>
+                        </div>
+
+                        <!-- Message body -->
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="message">{{ simple_contact.fields.message.label }}</label>
+                            <div class="col-md-9">
+                                <textarea class="form-control" id="message" name="message" placeholder="{{ simple_contact.fields.message.placeholder }}" rows="5"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Antispam input-->
+                        <div class="form-group antispam-div">
+                            <label class="col-md-3 control-label" for="antispam">{{ simple_contact.fields.antispam.label }}</label>
+                            <div class="col-md-9">
+                                <input id="antispam" name="antispam" type="text" placeholder="{{ simple_contact.fields.antispam.placeholder }}" class="form-control" />
+                            </div>
+                        </div>
+
+                        <!-- Form actions -->
+                        <div class="form-group">
+                            <div class="col-md-12 text-right">
+                                <button type="submit" class="btn btn-primary btn-lg">{{ simple_contact.fields.submit.label }}</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
