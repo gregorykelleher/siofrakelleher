@@ -1,30 +1,28 @@
 <?php
+/**
+ * @package    Grav.Common.Data
+ *
+ * @copyright  Copyright (C) 2014 - 2017 RocketTheme, LLC. All rights reserved.
+ * @license    MIT License; see LICENSE file for details.
+ */
+
 namespace Grav\Common\Data;
 
-use Grav\Common\File\CompiledYamlFile;
+use Grav\Common\Grav;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
-/**
- * Blueprints class keeps track on blueprint instances.
- *
- * @author RocketTheme
- * @license MIT
- */
 class Blueprints
 {
     protected $search;
     protected $types;
-    protected $instances = array();
+    protected $instances = [];
 
     /**
      * @param  string|array  $search  Search path.
      */
-    public function __construct($search)
+    public function __construct($search = 'blueprints://')
     {
-        if (!is_string($search)) {
-            $this->search = $search;
-        } else {
-            $this->search = rtrim($search, '\\/') . '/';
-        }
+        $this->search = $search;
     }
 
     /**
@@ -37,30 +35,7 @@ class Blueprints
     public function get($type)
     {
         if (!isset($this->instances[$type])) {
-            if (is_string($this->search)) {
-                $filename = $this->search . $type . YAML_EXT;
-            } else {
-                $filename = isset($this->search[$type]) ? $this->search[$type] : '';
-            }
-
-            if ($filename && is_file($filename)) {
-                $file = CompiledYamlFile::instance($filename);
-                $blueprints = $file->content();
-            } else {
-                $blueprints = [];
-            }
-
-            $blueprint = new Blueprint($type, $blueprints, $this);
-
-            if (isset($blueprints['@extends'])) {
-                // Extend blueprint by other blueprints.
-                $extends = (array) $blueprints['@extends'];
-                foreach ($extends as $extendType) {
-                    $blueprint->extend($this->get($extendType));
-                }
-            }
-
-            $this->instances[$type] = $blueprint;
+            $this->instances[$type] = $this->loadFile($type);
         }
 
         return $this->instances[$type];
@@ -76,7 +51,18 @@ class Blueprints
         if ($this->types === null) {
             $this->types = array();
 
-            $iterator   = new \DirectoryIterator($this->search);
+            $grav = Grav::instance();
+
+            /** @var UniformResourceLocator $locator */
+            $locator = $grav['locator'];
+
+            // Get stream / directory iterator.
+            if ($locator->isStream($this->search)) {
+                $iterator = $locator->getIterator($this->search);
+            } else {
+                $iterator = new \DirectoryIterator($this->search);
+            }
+
             /** @var \DirectoryIterator $file */
             foreach ($iterator as $file) {
                 if (!$file->isFile() || '.' . $file->getExtension() != YAML_EXT) {
@@ -86,6 +72,29 @@ class Blueprints
                 $this->types[$name] = ucfirst(strtr($name, '_', ' '));
             }
         }
+
         return $this->types;
+    }
+
+
+    /**
+     * Load blueprint file.
+     *
+     * @param  string  $name  Name of the blueprint.
+     * @return Blueprint
+     */
+    protected function loadFile($name)
+    {
+        $blueprint = new Blueprint($name);
+
+        if (is_array($this->search) || is_object($this->search)) {
+            // Page types.
+            $blueprint->setOverrides($this->search);
+            $blueprint->setContext('blueprints://pages');
+        } else {
+            $blueprint->setContext($this->search);
+        }
+
+        return $blueprint->load()->init();
     }
 }

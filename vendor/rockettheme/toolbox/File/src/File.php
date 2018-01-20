@@ -54,7 +54,7 @@ class File implements FileInterface
      * Get file instance.
      *
      * @param  string  $filename
-     * @return FileInterface
+     * @return static
      */
     public static function instance($filename)
     {
@@ -125,6 +125,20 @@ class File implements FileInterface
     }
 
     /**
+     * Free the file instance.
+     */
+    public function free()
+    {
+        if ($this->locked) {
+            $this->unlock();
+        }
+        $this->content = null;
+        $this->raw = null;
+
+        unset(static::$instances[$this->filename]);
+    }
+
+    /**
      * Get/set the file location.
      *
      * @param  string $var
@@ -181,7 +195,12 @@ class File implements FileInterface
             if (!$this->mkdir(dirname($this->filename))) {
                 throw new \RuntimeException('Creating directory failed for ' . $this->filename);
             }
-            $this->handle = fopen($this->filename, 'wb+');
+            $this->handle = @fopen($this->filename, 'cb+');
+            if (!$this->handle) {
+                $error = error_get_last();
+
+                throw new \RuntimeException("Opening file for writing failed on error {$error['message']}");
+            }
         }
         $lock = $block ? LOCK_EX : LOCK_EX | LOCK_NB;
         return $this->locked = $this->handle ? flock($this->handle, $lock) : false;
@@ -274,7 +293,11 @@ class File implements FileInterface
 
         } elseif ($this->content === null) {
             // Decode RAW file.
-            $this->content = $this->decode($this->raw());
+            try {
+                $this->content = $this->decode($this->raw());
+            } catch (\Exception $e) {
+                throw new \RuntimeException(sprintf('Failed to read %s: %s', $this->filename, $e->getMessage()), 500, $e);
+            }
         }
 
         return $this->content;
@@ -300,7 +323,8 @@ class File implements FileInterface
             $lock = true;
         }
 
-        if (@fwrite($this->handle, $this->raw()) === false) {
+        // As we are using non-truncating locking, make sure that the file is empty before writing.
+        if (@ftruncate($this->handle, 0) === false || @fwrite($this->handle, $this->raw()) === false) {
             $this->unlock();
             throw new \RuntimeException('Saving file failed: ' . $this->filename);
         }
@@ -311,6 +335,26 @@ class File implements FileInterface
 
         // Touch the directory as well, thus marking it modified.
         @touch(dirname($this->filename));
+    }
+
+    /**
+     * Rename file in the filesystem if it exists.
+     *
+     * @param $filename
+     * @return bool
+     */
+    public function rename($filename)
+    {
+        if ($this->exists() && !@rename($this->filename, $filename)) {
+            return false;
+        }
+
+        unset(static::$instances[$this->filename]);
+        static::$instances[$filename] = $this;
+
+        $this->filename = $filename;
+
+        return true;
     }
 
     /**
@@ -370,7 +414,8 @@ class File implements FileInterface
      */
     protected function mkdir($dir)
     {
-        if (!is_dir($dir)) {
+        // Silence error for open_basedir; should fail in mkdir instead.
+        if (!@is_dir($dir)) {
             $success = @mkdir($dir, 0777, true);
 
             if (!$success) {

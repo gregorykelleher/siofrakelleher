@@ -2,7 +2,7 @@
 return [
     '@class' => 'Grav\\Common\\File\\CompiledYamlFile',
     'filename' => 'user/plugins/simple_contact/simple_contact.yaml',
-    'modified' => 1439227553,
+    'modified' => 1516454049,
     'data' => [
         'enabled' => true,
         'subject' => 'New contact from Grav site!',

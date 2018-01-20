@@ -2,7 +2,7 @@
 return [
     '@class' => 'Grav\\Common\\File\\CompiledYamlFile',
     'filename' => 'user/plugins/cachebuster/blueprints.yaml',
-    'modified' => 1434301748,
+    'modified' => 1516454049,
     'data' => [
         'name' => 'Cachebuster',
         'version' => '1.0.0',

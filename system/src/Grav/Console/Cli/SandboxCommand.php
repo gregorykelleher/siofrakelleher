@@ -1,64 +1,64 @@
 <?php
+/**
+ * @package    Grav.Console
+ *
+ * @copyright  Copyright (C) 2014 - 2017 RocketTheme, LLC. All rights reserved.
+ * @license    MIT License; see LICENSE file for details.
+ */
+
 namespace Grav\Console\Cli;
 
+use Grav\Console\ConsoleCommand;
 use Grav\Common\Filesystem\Folder;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Class SandboxCommand
- * @package Grav\Console\Cli
- */
-class SandboxCommand extends Command
+class SandboxCommand extends ConsoleCommand
 {
     /**
      * @var array
      */
-    protected $directories = array(
+    protected $directories = [
+        '/assets',
         '/backup',
         '/cache',
-        '/logs',
         '/images',
-        '/assets',
+        '/logs',
+        '/tmp',
         '/user/accounts',
         '/user/config',
-        '/user/pages',
         '/user/data',
+        '/user/pages',
         '/user/plugins',
         '/user/themes',
-    );
+    ];
 
     /**
      * @var array
      */
-    protected $files = array(
+    protected $files = [
         '/.dependencies',
         '/.htaccess',
-        '/nginx.conf',
-        '/web.config',
         '/user/config/site.yaml',
         '/user/config/system.yaml',
-    );
+    ];
 
     /**
      * @var array
      */
-    protected $mappings = array(
-        '/.editorconfig' => '/.editorconfig',
-        '/.gitignore' => '/.gitignore',
-        '/CHANGELOG.md' => '/CHANGELOG.md',
-        '/LICENSE' => '/LICENSE',
-        '/README.md' => '/README.md',
-        '/index.php'     => '/index.php',
-        '/composer.json' => '/composer.json',
-        '/bin'           => '/bin',
-        '/system'        => '/system',
-        '/vendor'        => '/vendor',
-    );
+    protected $mappings = [
+        '/.gitignore'           => '/.gitignore',
+        '/CHANGELOG.md'         => '/CHANGELOG.md',
+        '/LICENSE.txt'          => '/LICENSE.txt',
+        '/README.md'            => '/README.md',
+        '/CONTRIBUTING.md'      => '/CONTRIBUTING.md',
+        '/index.php'            => '/index.php',
+        '/composer.json'        => '/composer.json',
+        '/bin'                  => '/bin',
+        '/system'               => '/system',
+        '/vendor'               => '/vendor',
+        '/webserver-configs'    => '/webserver-configs',
+    ];
 
     /**
      * @var string
@@ -66,22 +66,8 @@ class SandboxCommand extends Command
 
     protected $default_file = "---\ntitle: HomePage\n---\n# HomePage\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque porttitor eu felis sed ornare. Sed a mauris venenatis, pulvinar velit vel, dictum enim. Phasellus ac rutrum velit. Nunc lorem purus, hendrerit sit amet augue aliquet, iaculis ultricies nisl. Suspendisse tincidunt euismod risus, quis feugiat arcu tincidunt eget. Nulla eros mi, commodo vel ipsum vel, aliquet congue odio. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque velit orci, laoreet at adipiscing eu, interdum quis nibh. Nunc a accumsan purus.";
 
-    /**
-     * @var
-     */
     protected $source;
-    /**
-     * @var
-     */
     protected $destination;
-    /**
-     * @var InputInterface $input
-     */
-    protected $input;
-    /**
-     * @var OutputInterface $output
-     */
-    protected $output;
 
     /**
      *
@@ -107,24 +93,14 @@ class SandboxCommand extends Command
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
      * @return int|null|void
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function serve()
     {
-        $this->destination = $input->getArgument('destination');
-        $this->input = $input;
-        $this->output = $output;
-
-        // Create a red output option
-        $this->output->getFormatter()->setStyle('red', new OutputFormatterStyle('red'));
-        $this->output->getFormatter()->setStyle('cyan', new OutputFormatterStyle('cyan'));
-        $this->output->getFormatter()->setStyle('magenta', new OutputFormatterStyle('magenta'));
+        $this->destination = $this->input->getArgument('destination');
 
         // Symlink the Core Stuff
-        if ($input->getOption('symlink')) {
+        if ($this->input->getOption('symlink')) {
             // Create Some core stuff if it doesn't exist
             $this->createDirectories();
 
@@ -189,7 +165,7 @@ class SandboxCommand extends Command
             $to = $this->destination . $target;
 
             $this->output->writeln('    <cyan>' . $source . '</cyan> <comment>-></comment> ' . $to);
-            Folder::rcopy($from, $to);
+            @Folder::rcopy($from, $to);
         }
     }
 
@@ -226,7 +202,7 @@ class SandboxCommand extends Command
      */
     private function initFiles()
     {
-        $this->check($this->output);
+        $this->check();
 
         $this->output->writeln('');
         $this->output->writeln('<comment>File Initializing</comment>');
@@ -251,8 +227,6 @@ class SandboxCommand extends Command
         if (!$files_init) {
             $this->output->writeln('    <red>Files already exist</red>');
         }
-
-
     }
 
     /**
@@ -265,7 +239,7 @@ class SandboxCommand extends Command
 
         // get pages files and initialize if no pages exist
         $pages_dir = $this->destination . '/user/pages';
-        $pages_files = array_diff(scandir($pages_dir), array('..', '.'));
+        $pages_files = array_diff(scandir($pages_dir), ['..', '.']);
 
         if (count($pages_files) == 0) {
             $destination = $this->source . '/user/pages';
@@ -281,7 +255,7 @@ class SandboxCommand extends Command
     private function perms()
     {
         $this->output->writeln('');
-        $this->output->writeln('<comment>Permisions Initializing</comment>');
+        $this->output->writeln('<comment>Permissions Initializing</comment>');
 
         $dir_perms = 0755;
 
@@ -294,7 +268,6 @@ class SandboxCommand extends Command
 
         $this->output->writeln("");
     }
-
 
     /**
      *
@@ -321,6 +294,7 @@ class SandboxCommand extends Command
                 $success = false;
             }
         }
+
         if (!$success) {
             $this->output->writeln('');
             $this->output->writeln('<comment>install should be run with --symlink|--s to symlink first</comment>');

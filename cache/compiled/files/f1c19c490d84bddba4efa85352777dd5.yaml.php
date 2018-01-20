@@ -2,7 +2,7 @@
 return [
     '@class' => 'Grav\\Common\\File\\CompiledYamlFile',
     'filename' => 'themes://notepad/notepad.yaml',
-    'modified' => 1434301766,
+    'modified' => 1516454049,
     'data' => [
         'enabled' => true,
         'streams' => [

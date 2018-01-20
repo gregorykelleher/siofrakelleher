@@ -1,0 +1,9 @@
+1517058870
+s:982:"<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script><div class="fb-video" data-href="https://www.facebook.com/CentreforLifeLongLearningStAngelasCollege/videos/758900184182249"><blockquote cite="https://www.facebook.com/CentreforLifeLongLearningStAngelasCollege/videos/758900184182249/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/CentreforLifeLongLearningStAngelasCollege/videos/758900184182249/"></a><p>Niall Murphy from St. Attracta&#039;s first ArtBot finished! :D</p>Опубліковано <a href="https://www.facebook.com/CentreforLifeLongLearningStAngelasCollege/">Centre for Lifelong Learning - St Angela&#039;s College</a> 27 жовтня 2014 р.</blockquote></div>";

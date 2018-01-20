@@ -2,7 +2,7 @@
 return [
     '@class' => 'Grav\\Common\\File\\CompiledYamlFile',
     'filename' => 'plugins://embed/embed.yaml',
-    'modified' => 1434301749,
+    'modified' => 1516454049,
     'data' => [
         'enabled' => true,
         'oembed' => [

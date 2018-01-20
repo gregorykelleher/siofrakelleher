@@ -1,17 +1,23 @@
 <?php
+/**
+ * @package    Grav.Console
+ *
+ * @copyright  Copyright (C) 2014 - 2017 RocketTheme, LLC. All rights reserved.
+ * @license    MIT License; see LICENSE file for details.
+ */
+
 namespace Grav\Console;
 
+use Grav\Common\Grav;
+use Grav\Common\Composer;
 use Grav\Common\GravTrait;
 use Grav\Console\Cli\ClearCacheCommand;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Yaml\Yaml;
 
-/**
- * Class ConsoleTrait
- * @package Grav\Console
- */
 trait ConsoleTrait
 {
     use GravTrait;
@@ -35,12 +41,11 @@ trait ConsoleTrait
      */
     public function setupConsole(InputInterface $input, OutputInterface $output)
     {
-        if (self::getGrav()) {
-            self::getGrav()['config']->set('system.cache.driver', 'default');
-        }
+        // Initialize cache with CLI compatibility
+        Grav::instance()['config']->set('system.cache.cli_compatibility', true);
+        Grav::instance()['cache'];
 
         $this->argv = $_SERVER['argv'][0];
-
         $this->input  = $input;
         $this->output = $output;
 
@@ -85,7 +90,9 @@ trait ConsoleTrait
 
     public function composerUpdate($path, $action = 'install')
     {
-        return system('php bin/composer.phar --working-dir="'.$path.'" --no-interaction --no-dev --prefer-dist -o '. $action);
+        $composer = Composer::getComposerExecutor();
+
+        return system($composer . ' --working-dir="'.$path.'" --no-interaction --no-dev --prefer-dist -o '. $action);
     }
 
     /**
@@ -103,5 +110,23 @@ trait ConsoleTrait
         $command = new ClearCacheCommand();
         $input = new ArrayInput($all);
         return $command->run($input, $this->output);
+    }
+
+    /**
+     * Load the local config file
+     *
+     * @return mixed string the local config file name. false if local config does not exist
+     */
+    public function loadLocalConfig()
+    {
+        $home_folder = getenv('HOME') ?: getenv('HOMEDRIVE') . getenv('HOMEPATH');
+        $local_config_file = $home_folder . '/.grav/config';
+
+        if (file_exists($local_config_file)) {
+            $this->local_config = Yaml::parse(file_get_contents($local_config_file));
+            return $local_config_file;
+        }
+
+        return false;
     }
 }

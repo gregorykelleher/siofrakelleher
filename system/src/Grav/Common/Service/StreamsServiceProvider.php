@@ -1,7 +1,14 @@
 <?php
+/**
+ * @package    Grav.Common.Service
+ *
+ * @copyright  Copyright (C) 2014 - 2017 RocketTheme, LLC. All rights reserved.
+ * @license    MIT License; see LICENSE file for details.
+ */
+
 namespace Grav\Common\Service;
 
-use Grav\Common\Config\Config;
+use Grav\Common\Config\Setup;
 use Pimple\Container;
 use RocketTheme\Toolbox\DI\ServiceProviderInterface;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
@@ -13,21 +20,19 @@ class StreamsServiceProvider implements ServiceProviderInterface
 {
     public function register(Container $container)
     {
-        $self = $this;
+        $container['locator'] = function($c) {
+            $locator = new UniformResourceLocator(GRAV_ROOT);
 
-        $container['locator'] = function($c) use ($self) {
-            $locator = new UniformResourceLocator(ROOT_DIR);
-
-            /** @var Config $config */
-            $config = $c['config'];
-            $config->initializeLocator($locator);
+            /** @var Setup $setup */
+            $setup = $c['setup'];
+            $setup->initializeLocator($locator);
 
             return $locator;
         };
 
-        $container['streams'] = function($c) use ($self) {
-            /** @var Config $config */
-            $config = $c['config'];
+        $container['streams'] = function($c) {
+            /** @var Setup $setup */
+            $setup = $c['setup'];
 
             /** @var UniformResourceLocator $locator */
             $locator = $c['locator'];
@@ -36,7 +41,7 @@ class StreamsServiceProvider implements ServiceProviderInterface
             Stream::setLocator($locator);
             ReadOnlyStream::setLocator($locator);
 
-            return new StreamBuilder($config->getStreams($c));
+            return new StreamBuilder($setup->getStreams());
         };
     }
 }

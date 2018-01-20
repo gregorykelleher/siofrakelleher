@@ -1,4 +1,11 @@
 <?php
+/**
+ * @package    Grav.Common.Errors
+ *
+ * @copyright  Copyright (C) 2014 - 2017 RocketTheme, LLC. All rights reserved.
+ * @license    MIT License; see LICENSE file for details.
+ */
+
 namespace Grav\Common\Errors;
 
 use Whoops\Handler\Handler;
@@ -28,6 +35,7 @@ class SimplePageHandler extends Handler
         $cssFile      = $this->getResource("error.css");
 
         $code = $inspector->getException()->getCode();
+        $message = $inspector->getException()->getMessage();
 
         if ($inspector->getException() instanceof \ErrorException) {
             $code = Misc::translateErrorCode($code);
@@ -36,6 +44,7 @@ class SimplePageHandler extends Handler
         $vars = array(
             "stylesheet" => file_get_contents($cssFile),
             "code"        => $code,
+            "message"     => filter_var(rawurldecode($message), FILTER_SANITIZE_STRING),
         );
 
         $helper->setVariables($vars);

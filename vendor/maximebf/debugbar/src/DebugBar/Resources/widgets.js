@@ -11,6 +11,8 @@ if (typeof(PhpDebugBar) == 'undefined') {
      */
     PhpDebugBar.Widgets = {};
 
+    var csscls = PhpDebugBar.utils.makecsscls('phpdebugbar-widgets-');
+
     /**
      * Replaces spaces with &nbsp; and line breaks with <br>
      *
@@ -68,20 +70,53 @@ if (typeof(PhpDebugBar) == 'undefined') {
      *
      * @param  {String} code
      * @param  {String} lang
+     * @param  {Number} [firstLineNumber] If provided, shows line numbers beginning with the given value.
+     * @param  {Number} [highlightedLine] If provided, the given line number will be highlighted.
      * @return {String}
      */
-    var createCodeBlock = PhpDebugBar.Widgets.createCodeBlock = function(code, lang) {
-        var pre = $('<pre />');
-        $('<code />').text(code).appendTo(pre);
+    var createCodeBlock = PhpDebugBar.Widgets.createCodeBlock = function(code, lang, firstLineNumber, highlightedLine) {
+        var pre = $('<pre />').addClass(csscls('code-block'));
+        // Add a newline to prevent <code> element from vertically collapsing too far if the last
+        // code line was empty: that creates problems with the horizontal scrollbar being
+        // incorrectly positioned - most noticeable when line numbers are shown.
+        var codeElement = $('<code />').text(code + '\n').appendTo(pre);
+
+        // Add a span with a special class if we are supposed to highlight a line.  highlight.js will
+        // still correctly format code even with existing markup in it.
+        if ($.isNumeric(highlightedLine)) {
+            if ($.isNumeric(firstLineNumber)) {
+                highlightedLine = highlightedLine - firstLineNumber + 1;
+            }
+            codeElement.html(function (index, html) {
+                var currentLine = 1;
+                return html.replace(/^.*$/gm, function(line) {
+                    if (currentLine++ == highlightedLine) {
+                        return '<span class="' + csscls('highlighted-line') + '">' + line + '</span>';
+                    } else {
+                        return line;
+                    }
+                });
+            });
+        }
+
+        // Format the code
         if (lang) {
             pre.addClass("language-" + lang);
         }
         highlight(pre);
+
+        // Show line numbers in a list
+        if ($.isNumeric(firstLineNumber)) {
+            var lineCount = code.split('\n').length;
+            var $lineNumbers = $('<ul />').prependTo(pre);
+            pre.children().addClass(csscls('numbered-code'));
+            for (var i = firstLineNumber; i < firstLineNumber + lineCount; i++) {
+                $('<li />').text(i).appendTo($lineNumbers);
+            }
+        }
+
         return pre;
     };
-
-    var csscls = PhpDebugBar.utils.makecsscls('phpdebugbar-widgets-');
-
 
     // ------------------------------------------------------------------
     // Generic widgets
@@ -214,7 +249,28 @@ if (typeof(PhpDebugBar) == 'undefined') {
     });
 
     // ------------------------------------------------------------------
-    
+
+    /**
+     * An extension of KVListWidget where the data represents a list
+     * of variables whose contents are HTML; this is useful for showing
+     * variable output from VarDumper's HtmlDumper.
+     *
+     * Options:
+     *  - data
+     */
+    var HtmlVariableListWidget = PhpDebugBar.Widgets.HtmlVariableListWidget = KVListWidget.extend({
+
+        className: csscls('kvlist htmlvarlist'),
+
+        itemRenderer: function(dt, dd, key, value) {
+            $('<span />').attr('title', key).text(key).appendTo(dt);
+            dd.html(value);
+        }
+
+    });
+
+    // ------------------------------------------------------------------
+
     /**
      * Iframe widget
      *
@@ -260,38 +316,42 @@ if (typeof(PhpDebugBar) == 'undefined') {
             var self = this;
 
             this.$list = new ListWidget({ itemRenderer: function(li, value) {
-                var m = value.message;
-                if (m.length > 100) {
-                    m = m.substr(0, 100) + "...";
-                }
-
-                var val = $('<span />').addClass(csscls('value')).text(m).appendTo(li);
-                if (!value.is_string || value.message.length > 100) {
-                    var prettyVal = value.message;
-                    if (!value.is_string) {
-                        prettyVal = null;
+                if (value.message_html) {
+                    var val = $('<span />').addClass(csscls('value')).html(value.message_html).appendTo(li);
+                } else {
+                    var m = value.message;
+                    if (m.length > 100) {
+                        m = m.substr(0, 100) + "...";
                     }
-                    li.css('cursor', 'pointer').click(function() {
-                        if (val.hasClass(csscls('pretty'))) {
-                            val.text(m).removeClass(csscls('pretty'));
-                        } else {
-                            prettyVal = prettyVal || createCodeBlock(value.message, 'php');
-                            val.addClass(csscls('pretty')).empty().append(prettyVal);
+
+                    var val = $('<span />').addClass(csscls('value')).text(m).appendTo(li);
+                    if (!value.is_string || value.message.length > 100) {
+                        var prettyVal = value.message;
+                        if (!value.is_string) {
+                            prettyVal = null;
                         }
-                    });
+                        li.css('cursor', 'pointer').click(function () {
+                            if (val.hasClass(csscls('pretty'))) {
+                                val.text(m).removeClass(csscls('pretty'));
+                            } else {
+                                prettyVal = prettyVal || createCodeBlock(value.message, 'php');
+                                val.addClass(csscls('pretty')).empty().append(prettyVal);
+                            }
+                        });
+                    }
                 }
 
+                if (value.collector) {
+                    $('<span />').addClass(csscls('collector')).text(value.collector).prependTo(li);
+                }
                 if (value.label) {
                     val.addClass(csscls(value.label));
-                    $('<span />').addClass(csscls('label')).text(value.label).appendTo(li);
-                }
-                if (value.collector) {
-                    $('<span />').addClass(csscls('collector')).text(value.collector).appendTo(li);
+                    $('<span />').addClass(csscls('label')).text(value.label).prependTo(li);
                 }
             }});
 
             this.$list.$el.appendTo(this.$el);
-            this.$toolbar = $('<div><i class="fa fa-search"></i></div>').addClass(csscls('toolbar')).appendTo(this.$el);
+            this.$toolbar = $('<div><i class="phpdebugbar-fa phpdebugbar-fa-search"></i></div>').addClass(csscls('toolbar')).appendTo(this.$el);
 
             $('<input type="text" />')
                 .on('change', function() { self.set('search', this.value); })
@@ -307,7 +367,7 @@ if (typeof(PhpDebugBar) == 'undefined') {
                         continue;
                     }
                     filters.push(data[i].label);
-                    $('<a href="javascript:" />')
+                    $('<a />')
                         .addClass(csscls('filter'))
                         .text(data[i].label)
                         .attr('rel', data[i].label)
@@ -318,12 +378,19 @@ if (typeof(PhpDebugBar) == 'undefined') {
 
             this.bindAttr(['exclude', 'search'], function() {
                 var data = this.get('data'),
-                    exclude = this.get('exclude'), 
+                    exclude = this.get('exclude'),
                     search = this.get('search'),
+                    caseless = false,
                     fdata = [];
 
+                if (search && search === search.toLowerCase()) {
+                    caseless = true;
+                }
+
                 for (var i = 0; i < data.length; i++) {
-                    if ((!data[i].label || $.inArray(data[i].label, exclude) === -1) && (!search || data[i].message.indexOf(search) > -1)) {
+                    var message = caseless ? data[i].message.toLowerCase() : data[i].message;
+
+                    if ((!data[i].label || $.inArray(data[i].label, exclude) === -1) && (!search || message.indexOf(search) > -1)) {
                         fdata.push(data[i]);
                     }
                 }

@@ -24,7 +24,32 @@
 
             this.set('exclude', excludedLabels);
         },
-
+        onCopyToClipboard: function (el) {
+            var code = $(el).parent('li').find('code').get(0);
+            var copy = function () {
+                try {
+                    document.execCommand('copy');
+                    alert('Query copied to the clipboard');
+                } catch (err) {
+                    console.log('Oops, unable to copy');
+                }
+            };
+            var select = function (node) {
+                if (document.selection) {
+                    var range = document.body.createTextRange();
+                    range.moveToElementText(node);
+                    range.select();
+                } else if (window.getSelection) {
+                    var range = document.createRange();
+                    range.selectNodeContents(node);
+                    window.getSelection().removeAllRanges();
+                    window.getSelection().addRange(range);
+                }
+                copy();
+                window.getSelection().removeAllRanges();
+            };
+            select(code);
+        },
         render: function() {
             this.$status = $('<div />').addClass(csscls('status')).appendTo(this.$el);
 
@@ -40,10 +65,7 @@
                 if (stmt.memory_str) {
                     $('<span title="Memory usage" />').addClass(csscls('memory')).text(stmt.memory_str).appendTo(li);
                 }
-                if (typeof(stmt.is_success) != 'undefined' && !stmt.is_success) {
-                    li.addClass(csscls('error'));
-                    li.append($('<span />').addClass(csscls('error')).text("[" + stmt.error_code + "] " + stmt.error_message));
-                } else if (typeof(stmt.row_count) != 'undefined') {
+                if (typeof(stmt.row_count) != 'undefined') {
                     $('<span title="Row count" />').addClass(csscls('row-count')).text(stmt.row_count).appendTo(li);
                 }
                 if (typeof(stmt.stmt_id) != 'undefined' && stmt.stmt_id) {
@@ -54,7 +76,7 @@
                     li.attr("connection",stmt.connection);
                     if ( $.inArray(stmt.connection, filters) == -1 ) {
                         filters.push(stmt.connection);
-                        $('<a href="javascript:" />')
+                        $('<a />')
                             .addClass(csscls('filter'))
                             .text(stmt.connection)
                             .attr('rel', stmt.connection)
@@ -66,12 +88,24 @@
                         }
                     }
                 }
+                if (typeof(stmt.is_success) != 'undefined' && !stmt.is_success) {
+                    li.addClass(csscls('error'));
+                    li.append($('<span />').addClass(csscls('error')).text("[" + stmt.error_code + "] " + stmt.error_message));
+                }
+                $('<span title="Copy to clipboard" />')
+                    .addClass(csscls('copy-clipboard'))
+                    .css('cursor', 'pointer')
+                    .on('click', function (event) {
+                        self.onCopyToClipboard(this);
+                        event.stopPropagation();
+                    })
+                    .appendTo(li);
                 if (stmt.params && !$.isEmptyObject(stmt.params)) {
                     var table = $('<table><tr><th colspan="2">Params</th></tr></table>').addClass(csscls('params')).appendTo(li);
                     for (var key in stmt.params) {
                         if (typeof stmt.params[key] !== 'function') {
                             table.append('<tr><td class="' + csscls('name') + '">' + key + '</td><td class="' + csscls('value') +
-                            '">' + stmt.params[key] + '</td></tr>');
+                                '">' + stmt.params[key] + '</td></tr>');
                         }
                     }
                     li.css('cursor', 'pointer').click(function() {
@@ -86,11 +120,15 @@
             this.$list.$el.appendTo(this.$el);
 
             this.bindAttr('data', function(data) {
+                // the PDO collector maybe is empty
+                if (data.length <= 0) {
+                    return false;
+                }
                 this.$list.set('data', data.statements);
                 this.$status.empty();
 
                 // Search for duplicate statements.
-                for (var sql = {}, duplicate = 0, i = 0; i < data.statements.length; i++) {
+                for (var sql = {}, unique = 0, duplicate = 0, i = 0; i < data.statements.length; i++) {
                     var stmt = data.statements[i].sql;
                     if (data.statements[i].params && !$.isEmptyObject(data.statements[i].params)) {
                         stmt += ' {' + $.param(data.statements[i].params, false) + '}';
@@ -101,11 +139,13 @@
                 // Add classes to all duplicate SQL statements.
                 for (var stmt in sql) {
                     if (sql[stmt].keys.length > 1) {
-                        duplicate++;
+                        duplicate += sql[stmt].keys.length;
                         for (var i = 0; i < sql[stmt].keys.length; i++) {
                             this.$list.$el.find('.' + csscls('list-item')).eq(sql[stmt].keys[i])
-                                .addClass(csscls('sql-duplicate')).addClass(csscls('sql-duplicate-'+duplicate));
+                                .addClass(csscls('sql-duplicate'));
                         }
+                    } else {
+                        unique++;
                     }
                 }
 
@@ -114,7 +154,8 @@
                     t.append(", " + data.nb_failed_statements + " of which failed");
                 }
                 if (duplicate) {
-                    t.append(", " + duplicate + " of which were duplicated");
+                    t.append(", " + duplicate + " of which were duplicates");
+                    t.append(", " + unique + " unique");
                 }
                 if (data.accumulated_duration_str) {
                     this.$status.append($('<span title="Accumulated duration" />').addClass(csscls('duration')).text(data.accumulated_duration_str));

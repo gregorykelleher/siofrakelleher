@@ -1,11 +1,15 @@
 <?php
+/**
+ * @package    Grav.Common
+ *
+ * @copyright  Copyright (C) 2014 - 2017 RocketTheme, LLC. All rights reserved.
+ * @license    MIT License; see LICENSE file for details.
+ */
+
 namespace Grav\Common;
 
 trait GravTrait
 {
-    /**
-     * @var Grav
-     */
     protected static $grav;
 
     /**
@@ -16,14 +20,8 @@ trait GravTrait
         if (!self::$grav) {
             self::$grav = Grav::instance();
         }
+
         return self::$grav;
     }
-
-    /**
-     * @param Grav $grav
-     */
-    public static function setGrav(Grav $grav)
-    {
-        self::$grav = $grav;
-    }
 }
+

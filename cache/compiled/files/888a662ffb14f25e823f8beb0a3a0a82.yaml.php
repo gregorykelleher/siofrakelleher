@@ -2,7 +2,7 @@
 return [
     '@class' => 'Grav\\Common\\File\\CompiledYamlFile',
     'filename' => 'user/plugins/embed/blueprints.yaml',
-    'modified' => 1434301749,
+    'modified' => 1516454049,
     'data' => [
         'name' => 'Embed',
         'version' => '1.0.0',

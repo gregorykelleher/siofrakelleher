@@ -14,9 +14,14 @@ interface FileInterface
      * Get file instance.
      *
      * @param  string  $filename
-     * @return mixed
+     * @return static
      */
     public static function instance($filename);
+
+    /**
+     * Free the file instance.
+     */
+    public function free();
 
     /**
      * Check if file exits.

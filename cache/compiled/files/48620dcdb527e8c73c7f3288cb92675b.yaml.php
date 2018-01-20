@@ -2,7 +2,7 @@
 return [
     '@class' => 'Grav\\Common\\File\\CompiledYamlFile',
     'filename' => 'system/config/system.yaml',
-    'modified' => 1434301584,
+    'modified' => 1516454049,
     'data' => [
         'absolute_urls' => false,
         'timezone' => '',
