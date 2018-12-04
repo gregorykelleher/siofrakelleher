@@ -2,6 +2,7 @@
 title: "Allingham Festival 2018"
 taxonomy:
     tag: [featured][competition]
+image: allinghamfest.jpg
 slug: site
 date:  10-11-2018
 markdown_extra: true
