@@ -1,7 +1,0 @@
-1517058870
-s:1380:"<p>I'd been meaning to get around to writing about how to make a web site and I guess that time is now. I always thought making a web site would be very easy but I was wrong! I had some help to get this one set up - the 'hosting' thing went over my head.
-But I like the editing to put in my stories and photos etc. Also, the way you add entries to my site is kinda different to many sites. It doesn't have a database 'cause that just makes it way too complicated. Instead, I just create a folder on my Mac mini and in there I put all the images that I want for a post. Finally, I create a simple text file called post.md - in there I write the words.</p>
-<p><img style="" alt="Grav" src="/user/pages/blog/12-1-2015-grav/grav-logo.png?a3f5c069" /></p>
-<p>Though I've done HTML &amp; CSS in CoderDojo, it takes a lot of work just to make a simple amount on the screen. Instead this setup uses a 'language' called Markdown which is way easier and lets me just get on with the post.</p>
-<p>You can still do <strong>bold</strong> or <em>italics</em> real easy. For <strong>bold</strong>, just surround your word with double-asterisks, and single ones for italics. You can do bulletted lists just by using a single asterisk per line in front of your list. I find this way better than HTML.</p>
-<p>The whole system is call Grav and is 'open-source' which means it's also free to use!</p>";
