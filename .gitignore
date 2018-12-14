@@ -1,17 +1,13 @@
- # Grav Specific
- .sass-cache
- composer.lock
- cache/*
- images/*
- assets/*
+.sass-cache
+composer.lock
+cache/*
+images/*
+assets/*
 
- # OS Generated
- .DS_Store*
- ehthumbs.db
- Icon?
- Thumbs.db
- *.swp
-
- #custom
- sftp-config.json
- logs/
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+*.swp
+sftp-config.json
+logs/*
