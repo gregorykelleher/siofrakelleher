@@ -16,7 +16,7 @@ Fortunately, my poem was accepted into the anthology, but sadly due to Ireland's
 
 For the anthology I also had my photo taken by a professional for the first time, which was funny! He could tell I didn't like my photo being taken, but was great at getting me to relax and smile!
 
->*Bold golden light,
+>Bold golden light,
 >a day’s walk away,
 >shines down on Coney’s sight,
 >the liquid bay.
@@ -94,4 +94,4 @@ For the anthology I also had my photo taken by a professional for the first time
 >So, no matter how far away,
 >my heart will always yearn for Sligo shores,
 >the great yawning woods and
->the rushing rapids of Garavogue.*
+>the rushing rapids of Garavogue.
