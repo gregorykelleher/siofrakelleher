@@ -1,4 +1,4 @@
 ---
-title: FEATURED POSTS
+title: CATEGORIES
 ---
 
