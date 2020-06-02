@@ -1,4 +1,4 @@
 ---
-title: CATEGORIES
+title: Categories
 ---
 
