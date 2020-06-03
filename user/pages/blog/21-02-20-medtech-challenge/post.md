@@ -19,4 +19,7 @@ The challenge was simple, find a medtech solution to a problem in our current he
 
 I really enjoyed the day, and getting to meet and work with students from different schools. If you want to see more of MRT society's events I've included their social links below this post.
 
-![medtech2.jpg](my_team!)
+![medtech2.jpg]()
+
+[Medtech Research Soc Facebook](https://www.facebook.com/UCC-Medical-Research-and-Technology-Society-100656064650542/)
+[Medtech Research Soc Website](https://uccmrt.wordpress.com)
