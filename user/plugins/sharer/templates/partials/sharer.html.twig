@@ -1,0 +1,12 @@
+{% if sharer_config.enabled %}
+    {% set url = sharer_config.url|defined(page.url(true)) %}
+    {% set template = sharer_config.template|defined('rounded') %}
+    {% include 'partials/sharer_templates/' ~ template ~ '.html.twig' ignore missing with
+        {
+            'template': template,
+            'config': sharer_config,
+            'url': url,
+            'page': page
+        }
+    %}
+{% endif %}

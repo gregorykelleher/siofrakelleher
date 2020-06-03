@@ -1,0 +1,35 @@
+{% import 'macros/sharer_macros.html.twig' as macros %}
+
+{% block sharer_template %}
+<div class="sharer-buttons-toolbar clearfix {% block sharer_classes %}{% endblock %}">
+    {% for button, values in config.buttons|sharer_sort_buttons if values.enabled %}
+
+        {% set icon %}
+            {% include 'partials/sharer_icon.html.twig' with {
+                'name': values.icon,
+                'icon_group': values.icon_group,
+                'config': config
+            } %}
+        {% endset %}
+
+        {% block sharer_button %}
+        <button class="{% block sharer_button_classes %}sharer-{{ template }}--{{ button }}{% endblock %}" data-sharer="{{ button }}"
+            {{ macros.sharer_data(values, page, url) }}
+            >
+
+            {% block sharer_icon %}
+            {% if icon %}
+                <span class="sharer-icon">
+                    {{ icon }}
+                </span>
+            {% endif %}
+            {% endblock %}
+
+            {% block sharer_label %}
+                <span class="sharer-label">{{ values.label }}</span>
+            {% endblock %}
+        </button>
+        {% endblock %}
+    {% endfor %}
+</div>        
+{% endblock %}
