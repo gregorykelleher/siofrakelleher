@@ -97,3 +97,5 @@ Completed Leaving certificate (2019), Junior certificate (2016)
 -Used Linux packages and command line to display photos taken with a webcam on a live website for the day.
 **Coderdojo, IT Sligo** - student/volunteer
 *2013 - 2015*
+
+<a href="/user/pages/resume/resume.pdf" download class="btn">Download</a>
