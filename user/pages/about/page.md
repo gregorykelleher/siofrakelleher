@@ -1,5 +1,7 @@
 ---
 title: About Me
+route: about me
+menu: About Me
 ---
 
 ![](headshot1.jpg)
