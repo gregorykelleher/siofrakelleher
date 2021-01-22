@@ -2,7 +2,7 @@
 title: "10 Years with Type One Diabetes"
 taxonomy:
     tag: [ diabetes, featured]
-image: 10years.JPG
+image: 10years.jpg
 slug: 10 Years T1D
 date:  27-08-2020
 markdown_extra: true
