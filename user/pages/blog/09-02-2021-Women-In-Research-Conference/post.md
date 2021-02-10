@@ -2,7 +2,7 @@
 title: Women in Research Conference
 taxonomy:
     tag: [featured]
-image: WomenInResearch
+image: WomenInResearch.png
 slug: womeninresearchconference
 date: 09-02-2021
 markdown_extra: true
