@@ -2,7 +2,7 @@
 title: Google Europe Students with Disabilities Scholarship
 taxonomy:
     tag: [featured]
-image: GoogleScholarship.png
+image: googlescholarship.jpg
 slug: googlescholarship
 date: 05-05-2021
 markdown_extra: true
