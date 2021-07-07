@@ -1,7 +1,7 @@
 ---
 title: "More from Artbot"
 taxonomy:
-    tag: [artbot, featured]
+    tag: [competition, coding, featured]
 image: eejit.jpg
 slug: morefromartbot
 date: 19-11-2014
