@@ -1,7 +1,7 @@
 ---
 title: HRB Clinical Research Facility
 taxonomy:
-    tag: [featured, research]
+    tag: [featured, UCC, research]
 image: HRB-CRF.png
 slug: hrbclinicalresearchfacility
 date: 20-06-2021
