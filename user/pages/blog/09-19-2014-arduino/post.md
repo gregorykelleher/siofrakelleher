@@ -1,7 +1,7 @@
 ---
 title: "Trying out Arduino"
 taxonomy:
-    tag: [arduino, featured]
+    tag: [coding, arduino, featured]
 image: arduino1.jpg
 slug: first-arduino
 date:  9-9-2014
