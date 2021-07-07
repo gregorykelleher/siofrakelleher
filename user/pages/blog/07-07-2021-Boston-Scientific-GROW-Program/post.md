@@ -1,14 +1,16 @@
 ---
 title: Boston Scientific GROW Program
 taxonomy:
-    tag: [featured]
+    tag: [medical devices, featured]
 image: BSCI.png
 slug: bostonscientific
 date: 28-07-2021
 markdown_extra: true
 ---
 
-This Summer I will be working in Boston Scientific as a part of their GROW program. The program aims to give engineering, science and biotechnology students experience working on BSCI product lines, as well as learn valuable skills in classes.
+This Summer I will be working in Boston Scientific as a part of their GROW program.
+
+The program aims to give engineering, science and biotechnology students experience working on BSCI product lines, as well as learn valuable skills in classes.
 These classes cover a wide ranch of topics, including presentation skills, resiliance, emotional intelligence and project management.
 
 I originally was not going to take up on the offer, as I felt production line work did not match well with my Business Information Systems course. However, after speaking with those in charge of the program, they instead placed me with the product release team. I am very grateful to BSCI for making this accommodation, and my mentor, Colyn Murphy's encouragement to start in Boston Scientific.
