@@ -1,7 +1,7 @@
 ---
 title: "Surviving Artbot"
 taxonomy:
-    tag: [artbot, featured]
+    tag: [technology, competition, featured]
 image: eyes.jpg
 slug: artbotafter
 date:  10-11-2014
