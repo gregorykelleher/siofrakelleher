@@ -1,7 +1,7 @@
 ---
 title: "BIS Anthology 2020"
 taxonomy:
-    tag: [competition, poetry, featured]
+    tag: [competition, UCC, poetry, featured]
 image: knocknarea.JPG
 slug: BIS Anthology
 date:  26-05-2020
