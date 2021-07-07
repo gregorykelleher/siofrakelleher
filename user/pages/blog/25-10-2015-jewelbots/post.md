@@ -1,7 +1,7 @@
 ---
 title: Jewelbots
 taxonomy:
-    tag: [news, featured]
+    tag: [technology, featured]
 image: jewelbotsheader.jpg
 slug: jewelbots
 date: 25-10-2015
