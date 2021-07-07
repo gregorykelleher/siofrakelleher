@@ -4,7 +4,7 @@ taxonomy:
 tag: [featured, diabetes]
 image: IDF_Europe.jpg
 slug: idfeuropeyllupdate
-date: 07-07-2021
+date: 08-07-2021
 markdown_extra: true
 ---
 
