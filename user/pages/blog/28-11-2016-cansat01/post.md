@@ -1,7 +1,7 @@
 ---
 title: "CanSat Introduction"
 taxonomy:
-    tag: [arduino, competition, featured]
+    tag: [arduino, coding, competition, featured]
 image: eimear_and_siofra.jpg
 slug: CanSat
 date:  28-11-2016
