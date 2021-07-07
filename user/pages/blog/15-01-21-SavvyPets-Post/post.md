@@ -1,7 +1,7 @@
 ---
 title: "SavvyPets post"
 taxonomy:
-    tag: [gus, diabetes, featured]
+    tag: [diabetes, featured]
 image: pets.jpg
 slug: SavvyPets Post
 date:  15-01-2021
