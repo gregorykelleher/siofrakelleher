@@ -1,7 +1,7 @@
 ---
 title: "Yun Cam"
 taxonomy:
-    tag: [news, featured]
+    tag: [coding, news, featured]
 image: web-summit.jpg
 slug: yuncam
 markdown_extra: true
