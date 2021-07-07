@@ -1,7 +1,7 @@
 ---
 title: "Artbot in Brussels"
 taxonomy:
-    tag: [artbot, featured]
+    tag: [competition, coding, featured]
 image: artbot.jpg
 slug: artbot
 date:  22-10-2014
