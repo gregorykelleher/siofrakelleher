@@ -1,7 +1,7 @@
 ---
 title: Google Europe Students with Disabilities Scholarship
 taxonomy:
-    tag: [featured]
+    tag: [diabetes, competition, google, featured]
 image: googlescholarship.jpg
 slug: googlescholarship
 date: 05-05-2021
