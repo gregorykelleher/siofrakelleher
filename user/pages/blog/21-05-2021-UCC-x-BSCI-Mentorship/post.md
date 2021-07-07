@@ -1,7 +1,7 @@
 ---
 title: UCC x Boston Scientific Cork Mentorship
 taxonomy:
-    tag: [featured]
+    tag: [featured, UCC]
 image: UCC_BSCI.png
 slug: UCCBostonScientific
 date: 21-05-2021
