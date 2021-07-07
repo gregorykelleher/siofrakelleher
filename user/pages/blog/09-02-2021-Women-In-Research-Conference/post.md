@@ -15,7 +15,7 @@ Attending the Medtech challenge last year changed my viewpoint dramatically. Giv
 Most committees are motivated by providing useful and fun events and workshops to students. 
 
 The purpose of the Women in Research Conference was to highlight the work undertaken by women in research fields such as mathematical sciences, business information systems, AI, cancer research, theoretical physics, public health and biological sciences.
-I was particularly excited to hear Gaye Kiely’s own research with the Technology-Enabled Organizational Transparency & Openness(TOTO) project here in UCC’s BIS department.
+I was particularly excited to hear Gaye Kiely’s own research with the [Technology-Enabled Organizational Transparency & Openness(TOTO)](http://toto.ucc.ie/) project here in UCC’s BIS department.
 We hoped to inspire students from all disciplines in their research endeavours.
 
 Eabhnat Ní Fhloinn spoke about the various journal papers she has published about access, diversity, diagnostic testing in universities in mathematical sciences.
