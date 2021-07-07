@@ -1,7 +1,7 @@
 ---
 title: IDF Europe Youth Leadership Lab
 taxonomy:
-    tag: [featured]
+    tag: [featured, diabetes]
 image: IDF_Europe.jpg
 slug: idfeuropeyll
 date: 17-06-2021
