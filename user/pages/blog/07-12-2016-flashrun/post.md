@@ -1,7 +1,7 @@
 ---
 title: "Flashrun Project"
 taxonomy:
-    tag: [arduino, raspberrypi, featured]
+    tag: [coding, arduino, raspberrypi, featured]
 image: raspberrypi_and_arduino.jpg
 slug: flashrun
 date: 07-12-2016
