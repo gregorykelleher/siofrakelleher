@@ -1,7 +1,7 @@
 ---
 title: "Medtech Challenge"
 taxonomy:
-    tag: [competition, featured]
+    tag: [competition, UCC, featured]
 image: medtech1.jpg
 slug: medtech
 markdown_extra: true
