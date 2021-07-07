@@ -1,7 +1,7 @@
 ---
 title: "Making a site"
 taxonomy:
-    tag: [featured]
+    tag: [featured, coding]
 image: grav-01.png
 slug: site
 date:  12-01-2015
