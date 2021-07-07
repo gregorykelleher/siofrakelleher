@@ -1,7 +1,7 @@
 ---
 title: Women in Research Conference
 taxonomy:
-    tag: [featured]
+    tag: [research, UCC, featured]
 image: WomenInResearch.png
 slug: womeninresearchconference
 date: 09-02-2021
