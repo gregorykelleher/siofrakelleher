@@ -1,7 +1,7 @@
 ---
 title: "EYP Regionals 2017"
 taxonomy:
-    tag: [news, competition, EYP, featured]
+    tag: [competition, EYP, featured]
 image: group.jpg
 slug: eyp-reg
 date:  27-11-2017
