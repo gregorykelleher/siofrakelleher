@@ -13,6 +13,7 @@ It is a dream come true for me to say I am officially a member of the Internatio
 > The International Diabetes Federation (IDF) is an umbrella organization of over 230 national diabetes associations in 170 countries and territories. It represents the interests of the growing number of people with diabetes and those at risk. The Federation has been leading the global diabetes community since 1950.
 
 Their main activities are advocacy, epidemiology & research, education and care & prevention. You may know IDF from their World Diabetes Day campaign or the blue circle symbol of diabetes worldwide.
+
 ![Blue Circle symbol](wdd_logo.png)
 
 I was encouraged to apply to the IDF's Youth Leadership Lab by Grainne Flynn at [Blood Sugar Trampoline](https://bloodsugartrampoline.com/). My friends Prof Sean Dinneen and Dr Eimear Morrissey at [D1Now](https://d1now.ie) also supported me throughout the application process. However, as Ireland currently doesn't have a member organisation, according to the rules of the YLL, I may not be allowed to participate. I had an interview to see if I was the right candidate for the lab. 
