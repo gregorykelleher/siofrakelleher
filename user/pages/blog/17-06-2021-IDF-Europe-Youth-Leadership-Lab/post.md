@@ -21,3 +21,5 @@ I was encouraged to apply to the IDF's Youth Leadership Lab by Grainne Flynn at 
 I'm delighted to also be joined by another Irish diabetic and to be representing Ireland on a global stage like this.
 
 So far it has been a great experience connecting with so many other diabetics across Europe and exploring the differences between our cultures and our experiences with diabetes. I look forward to my future with the International Diabetes Federation.
+
+![FirstMeeting](zoomscreenshot.png)
