@@ -2,8 +2,8 @@
 title: "Thrivebetes Interview"
 taxonomy:
     tag: [diabetes, featured]
-image: Thrivebetes.jpg
-slug: thrivebetesinterview
+image: Thriveabetes.jpg
+slug: thriveabetesinterview
 date:  17-08-2021
 markdown_extra: true
 ---
