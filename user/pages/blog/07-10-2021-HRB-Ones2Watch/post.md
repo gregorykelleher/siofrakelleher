@@ -15,4 +15,4 @@ I always love to represent D1Now at conferences, as I believe what we are doing 
 
 Luckily our session was recorded and is available for viewing!
 
-[plugin:youtube](https://www.youtube.com/embed/nsdbK9q_oDw?start=1857)
+[plugin:youtube](https://www.youtube.com/embed/nsdbK9q_oDw)
