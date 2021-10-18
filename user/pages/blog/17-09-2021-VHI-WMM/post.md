@@ -16,3 +16,5 @@ Running regularly has been surprisingly beneficial. I noticed my mood improved a
 So my deadline was the 17th of September. Luckily for me, VHI Women's Marathon split the 10k race into two 5k runs over the weekend. I managed to run both and was proud of my efforts. I look forward to perhaps reaching 10k next year.
 
 In the end, I gained a new habit of running regularly again but also raising money for a good cause. The Irish Heart Foundation supports those who suffer from stroke and heart issues, as well as raising awareness of the importance of heart health. I was able to raise €110 for the foundation which I'm very grateful for.
+
+![FirstRun](watch.png)
